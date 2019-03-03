@@ -33,6 +33,22 @@ $container['db'] = function($c) {
 };
 
 $app->add(new RemoveTrailingSlash());
+$app->add(function ($req, $res, $next) {
+  $response = $next($req, $res);
+  return $response
+    ->withHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+});
+
+$app->get('/', function($request, $response, $args) {
+  $file = 'index.html';
+  if(file_exists($file)) {
+    return $reponse->write(file_get_contents($file));
+  } else {
+    throw new \Slim\Exception\NotFoundException($request, $response);
+  }
+});
 
 $app->group('/api/v1', function (\Slim\App $app) {
   $app->get('/movies', 'RouteController:getMovies');

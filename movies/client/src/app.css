@@ -1,0 +1,27 @@
+.app-header {
+  height: 65px;
+  line-height: 65px;
+  padding: 0 1.2rem;
+  font-size: 2.1rem;
+  color: #fff;
+  background-color: #06f;
+}
+
+.app-header i {
+  padding-right: 1.2rem;
+}
+
+.app-main {
+  padding: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.movie-tile {
+  width: 150px;
+  height: 200px;
+  /* margin: 1.2rem;
+  border: 1px solid #000; */
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+  /* cursor: pointer; */
+}
