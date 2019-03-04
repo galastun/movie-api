@@ -1,17 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function MovieTile(props) {
-  const { title, category, rating } = props;
-  const imageNumber = Math.floor(Math.random() * 10);
-  const style = {
-    backgroundImage: `url(images/${imageNumber}.jpg)`,
-    backgroundSize: 'cover',
-  };
+  const { id, title, category, rating, image } = props;
 
   return (
-    <div style={{ width: '150px', margin: '1.2rem', cursor: 'pointer' }}>
-      <img src={`images/${imageNumber}.jpg`} className="movie-tile" alt={ title } />
-      { title } - { rating }
-    </div>
+    <Link to={`/movie/${id}`} className="movie-tile-container flex-col">
+      <img src={image} className="movie-tile" alt={ title } />
+      <span>{ title }</span>
+      <i className="text-small">{ rating }</i>
+    </Link>
   );
 }

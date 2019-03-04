@@ -8,8 +8,10 @@ module.exports = {
   mode: 'development',
   output: {
     path: path.resolve(__dirname, '../public'),
+    publicPath: '/',
     filename: 'app.js',
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -40,6 +42,8 @@ module.exports = {
   ],
   devServer: {
     contentBase: '../public',
+    publicPath: '/',
     hot: true,
+    historyApiFallback: true,
   }
 };

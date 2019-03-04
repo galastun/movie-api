@@ -59,6 +59,19 @@ class MovieDbHelper {
   }
 
   /**
+   * Gets all categories used with the movies
+   * 
+   * @return {Object}
+   */
+  public function getCategories() {
+    $stmt = $this->db->query('
+      SELECT * FROM category
+    ');
+
+    return $this->wrapData('categories', $stmt->fetchAll(\PDO::FETCH_ASSOC));
+  }
+
+  /**
    * Wraps the response data in the Google JSON style guide recommended
    * structure with data on the outside. Defaults to an array of items
    * but that can be changed.

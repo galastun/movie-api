@@ -54,6 +54,7 @@ $app->group('/api/v1', function (\Slim\App $app) {
   $app->get('/movies', 'RouteController:getMovies');
   $app->get('/movies/{id}', 'RouteController:getMovieById');
   $app->get('/movies/{id}/actors', 'RouteController:getActors');
+  $app->get('/categories', 'RouteController:getCategories');
 });
 
 $app->run();

@@ -1,33 +1,65 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import MovieTile from './MovieTile';
+import ActorInfo from './ActorInfo';
+import utilities from './utilities';
 
 export default class MovieInfo extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      movies: [],
+      actors: [],
     };
   }
 
-  componentDidMount() {
-    fetch('http://localhost:3000/api/v1/movies').then((res) => res.json())
-    .then((data) => {
-      const movies = [];
-      data.data.movies.forEach((movie, i) => {
-        movies.push(<MovieTile { ...movie } key={ i } />);
-
-        this.setState({ movies });
+  componentWillMount() {
+    const { movie } = this.props;
+    fetch(`http://localhost:3000/api/v1/movies/${movie.film_id}/actors`)
+      .then(res => res.json())
+      .then((json) => {
+        this.setState({ actors: json.data.actors });
       });
-    });
   }
 
   render() {
-    return (
-      <main className="app-main">
-        { this.state.movies }
-      </main>
-    );
+    if (this.props.movie) {
+      const { film_id: id, title, category, rating, description, _image } = this.props.movie;
+      const actors = [];
+
+      this.state.actors.forEach((actor, i) => {
+        const imageNumber = Math.floor(Math.random() * 10);
+        actors.push(
+          <ActorInfo
+            image={ `/images/person${imageNumber}.jpeg` }
+            name={ utilities.toTitleCase(`${actor.first_name} ${actor.last_name}`) }
+            key={ i }
+          />
+        );
+      });
+
+      return (
+        <aside className="movie-info">
+          <Link to="/" className="cancel-button fas fa-times"></Link>
+          <div className="movie-info-header">
+            <img src={_image} alt={title} width="100px" height="150px"/>
+            <div className="flex-col movie-info-title">
+              <h3>{ utilities.toTitleCase(title) }</h3>
+              <i>{ rating }</i>
+              <i>{ category }</i>
+            </div>
+          </div>
+
+          <p>{ description }</p>
+
+          <div className="actor-list">
+            <h4>Cast</h4>
+            { actors }
+          </div>
+        </aside>
+      );
+    }
+
+    return null;
   }
 }
