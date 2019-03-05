@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import ActorInfo from './ActorInfo';
-import utilities from './utilities';
+import utilities from '../utilities/index';
 
 /**
  * Container for displaying extended movie information to include actor info.

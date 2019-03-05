@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './app.css';
 
-import Header from './Header';
-import MovieList from './MovieList';
-import MovieInfo from './MovieInfo';
+import Header from './components/Header';
+import MovieList from './components/MovieList';
+import MovieInfo from './components/MovieInfo';
+import MaxRating from './components/MaxRating';
 
 /**
  * Main JSX template and state handler for the application
@@ -18,9 +19,20 @@ export default class App extends Component {
 
     this.categories = [];
 
+    this.ratings = [
+      'NC-17',
+      'R',
+      'PG-13',
+      'PG',
+      'G',
+    ];
+
     this.state = {
       movies: [],
+      rating: 'NC-17',
     };
+
+    this.updateRating = this.updateRating.bind(this);
   }
 
   /**
@@ -61,19 +73,26 @@ export default class App extends Component {
     return null;
   }
 
+  updateRating(rating) {
+    this.setState({ rating });
+  }
+
   /**
    * Renders the BrowserRouter and the main layout of the application.
    *
    * @return {ReactElement}
    */
   render() {
-    const { movies } = this.state;
+    const { movies, rating } = this.state;
+    const filter = this.ratings.slice(this.ratings.indexOf(rating));
     return (
       <Router>
         <div className="app-wrapper">
           <Header title="FakeFlix" />
           <main className="main-content">
-            <MovieList movies={movies} categories={this.categories} />
+            <MovieList movies={movies} categories={this.categories} filter={filter}>
+              <MaxRating selected={rating} ratings={this.ratings} onChange={this.updateRating} />
+            </MovieList>
             <Route
               path="/movie/:id"
               render={(data) => {

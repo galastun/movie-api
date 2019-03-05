@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MovieTile from './MovieTile';
-
 /**
  * Horizontally sliding container for movie tiles.
  *
@@ -21,7 +19,10 @@ export default function CategorySlider(props) {
 }
 
 CategorySlider.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(PropTypes.instanceOf(MovieTile)).isRequired,
+  children: PropTypes.oneOf([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element,
+  ]).isRequired,
 };

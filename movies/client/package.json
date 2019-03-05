@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "CCB Movie DB",
   "main": "index.js",
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ]
+  },
   "babel": {
     "presets": [
       "@babel/preset-env",
@@ -11,7 +17,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -43,8 +49,12 @@
     "webpack-dev-server": "^3.2.1"
   },
   "devDependencies": {
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "jest": "^24.1.0",
+    "jest-cli": "^24.1.0"
   }
 }

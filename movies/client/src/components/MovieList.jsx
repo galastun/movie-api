@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import MovieTile from './MovieTile';
 import CategorySlider from './CategorySlider';
-import utilities from './utilities';
+import utilities from '../utilities';
 
 /**
  * Displays CategorySliders for all movies based on their category.
@@ -12,7 +12,12 @@ import utilities from './utilities';
  * @returns {ReactElement}
  */
 export default function MovieList(props) {
-  const { movies, categories } = props;
+  const {
+    movies,
+    categories,
+    filter,
+    children,
+  } = props;
   const categoryMap = {};
   const _categories = [];
 
@@ -37,13 +42,15 @@ export default function MovieList(props) {
     }
 
     // Put the movie in the specific category
-    categoryMap[category].push(<MovieTile
-      title={utilities.toTitleCase(title)}
-      rating={rating}
-      image={image}
-      id={id}
-      key={id}
-    />);
+    if (filter.includes(rating)) {
+      categoryMap[category].push(<MovieTile
+        title={utilities.toTitleCase(title)}
+        rating={rating}
+        image={image}
+        id={id}
+        key={id}
+      />);
+    }
   });
 
   Object.entries(categoryMap).forEach((obj, i) => {
@@ -56,12 +63,22 @@ export default function MovieList(props) {
 
   return (
     <section className="movie-list">
+      { children }
       { _categories }
     </section>
   );
 }
 
+MovieList.defaultProps = {
+  children: [],
+};
+
 MovieList.propTypes = {
-  movies: PropTypes.object.isRequired,
-  categories: PropTypes.string.isRequired,
+  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  filter: PropTypes.arrayOf(PropTypes.string).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element,
+  ]),
 };

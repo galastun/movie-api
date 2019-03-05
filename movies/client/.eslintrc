@@ -5,6 +5,7 @@
     "no-param-reassign": 0,
     "no-undef": "off",
     "no-plusplus": "off",
+    "jsx-a11y/label-has-for": 0,
     "react/no-array-index-key": 0,
     "react/forbid-prop-types": [true, { "forbid": ["any", "array"], "checkContextTypes": false, "checkChildContextTypes": false }]
   }
