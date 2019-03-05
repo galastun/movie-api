@@ -49,5 +49,17 @@ class RouteController {
     $db = $this->container->get('db');
     return $response->withJson($db->getMovieActors($args['id']));
   }
+
+  /**
+   * Responsible for returning all categories.
+   * 
+   * @param {Request} $request Slim request object
+   * @param {Response} $reponse Slim response object
+   * @return {HTTPResponse}
+   */
+  public function getCategories(Request $request, Response $response, array $args) {
+    $db = $this->container->get('db');
+    return $response->withJson($db->getCategories());
+  }
 }
 ?>

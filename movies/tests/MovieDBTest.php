@@ -12,10 +12,11 @@ final class MovieDbHelperTest extends TestCase {
   protected $mockPdo;
   protected function setUp() {
     $this->mockPdo = $this->getMockBuilder(MockPDO::class)
-      ->setMethods(['prepare', 'execute', 'fetchAll'])
+      ->setMethods(['prepare', 'execute', 'fetchAll', 'query'])
       ->getMock();
 
     $this->mockPdo->method('prepare')->will($this->returnSelf());
+    $this->mockPdo->method('query')->will($this->returnSelf());
     $this->mockPdo->method('fetchAll')->willReturn(array('mock' => array()));
 
     $this->movieDb = new MovieDbHelper($this->mockPdo, array(
@@ -57,6 +58,23 @@ final class MovieDbHelperTest extends TestCase {
       )
     ), $result);
   }
+
+    /** @test */
+    public function shouldGetCategories(): void {
+      $this->mockPdo
+        ->expects($this->once())
+        ->method('query')
+        ->with($this->stringContains('SELECT * FROM category'));
+  
+      $result = $this->movieDb->getCategories();
+      $this->assertEquals(array(
+        'data' => array(
+          'categories' => array(
+            'mock' => array()
+          )
+        )
+      ), $result);
+    }
 
   /** @test */
   public function shouldGetMovies(): void {
