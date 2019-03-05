@@ -4,6 +4,12 @@ import MovieTile from './MovieTile';
 import CategorySlider from './CategorySlider';
 import utilities from './utilities';
 
+/**
+ * Displays CategorySliders for all movies based on their category.
+ * 
+ * @param {Object} props
+ * @returns {ReactElement}
+ */
 export default function MovieList(props) {
   const { movies, categories } = props;
   const categoryMap = {};

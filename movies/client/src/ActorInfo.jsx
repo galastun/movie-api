@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ * Displays the actor image and name.
+ * 
+ * @param {Object} props
+ * @returns {ReactElement}
+ */
 export default function ActorInfo(props) {
   const { image, name } = props;
 

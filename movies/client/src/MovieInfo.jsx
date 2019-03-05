@@ -4,7 +4,14 @@ import { Link } from 'react-router-dom';
 import ActorInfo from './ActorInfo';
 import utilities from './utilities';
 
+/**
+ * Container for displaying extended movie information to include actor info.
+ */
 export default class MovieInfo extends Component {
+  /**
+   * @constructor
+   * @param {Object} props 
+   */
   constructor(props) {
     super(props);
 
@@ -13,6 +20,9 @@ export default class MovieInfo extends Component {
     };
   }
 
+  /**
+   * Gets the list of actors for the given movie.
+   */
   componentWillMount() {
     const { movie } = this.props;
     fetch(`http://localhost:3000/api/v1/movies/${movie.film_id}/actors`)
@@ -22,6 +32,11 @@ export default class MovieInfo extends Component {
       });
   }
 
+  /**
+   * Combines Actor information and movie information in an information panel.
+   *
+   * @returns {ReactElement}
+   */
   render() {
     if (this.props.movie) {
       const { film_id: id, title, category, rating, description, _image } = this.props.movie;

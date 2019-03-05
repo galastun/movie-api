@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ * Horizontally sliding container for movie tiles.
+ * 
+ * @param {Object} props
+ * @returns {ReactElement}
+ */
 export default function CategorySlider(props) {
   const { id, title, children } = props;
 

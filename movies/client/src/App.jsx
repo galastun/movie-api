@@ -6,7 +6,13 @@ import Header from './Header';
 import MovieList from './MovieList';
 import MovieInfo from './MovieInfo';
 
+/**
+ * Main JSX template and state handler for the application
+ */
 export default class App extends Component {
+  /**
+   * @constructor
+   */
   constructor() {
     super();
 
@@ -17,6 +23,9 @@ export default class App extends Component {
     };
   }
 
+  /**
+   * Get all movie and all categories. 
+   */
   componentDidMount() {
     Promise.all([
       fetch('http://localhost:3000/api/v1/categories').then(res => res.json()),
@@ -31,6 +40,12 @@ export default class App extends Component {
     });
   }
 
+  /**
+   * Returns the movie that has the given ID.
+   *
+   * @param {String} id The movie ID to get
+   * @return {Object}
+   */
   getMovieById(id) {
     const { length } = this.state.movies;
 
@@ -45,6 +60,11 @@ export default class App extends Component {
     return null;
   }
 
+  /**
+   * Renders the BrowserRouter and the main layout of the application.
+   * 
+   * @return {ReactElement}
+   */
   render() {
     return(
       <Router>
