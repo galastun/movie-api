@@ -1,3 +1,11 @@
 {
-  "extends": "airbnb"
+  "extends": "airbnb",
+  "rules": {
+    "no-underscore-dangle": 0,
+    "no-param-reassign": 0,
+    "no-undef": "off",
+    "no-plusplus": "off",
+    "react/no-array-index-key": 0,
+    "react/forbid-prop-types": [true, { "forbid": ["any", "array"], "checkContextTypes": false, "checkChildContextTypes": false }]
+  }
 }

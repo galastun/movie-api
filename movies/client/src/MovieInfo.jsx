@@ -10,7 +10,7 @@ import utilities from './utilities';
 export default class MovieInfo extends Component {
   /**
    * @constructor
-   * @param {Object} props 
+   * @param {Object} props
    */
   constructor(props) {
     super(props);
@@ -38,26 +38,34 @@ export default class MovieInfo extends Component {
    * @returns {ReactElement}
    */
   render() {
-    if (this.props.movie) {
-      const { film_id: id, title, category, rating, description, _image } = this.props.movie;
-      const actors = [];
+    const { movie } = this.props;
+    const { actors } = this.state;
+    if (movie) {
+      const {
+        title,
+        category,
+        rating,
+        description,
+        _image,
+      } = movie;
+      const _actors = [];
 
-      this.state.actors.forEach((actor, i) => {
+      actors.forEach((actor, i) => {
         const imageNumber = Math.floor(Math.random() * 10);
-        actors.push(
+        _actors.push(
           <ActorInfo
-            image={ `/images/person${imageNumber}.jpeg` }
-            name={ utilities.toTitleCase(`${actor.first_name} ${actor.last_name}`) }
-            key={ i }
-          />
+            image={`/images/person${imageNumber}.jpeg`}
+            name={utilities.toTitleCase(`${actor.first_name} ${actor.last_name}`)}
+            key={i}
+          />,
         );
       });
 
       return (
         <aside className="movie-info">
-          <Link to="/" className="cancel-button fas fa-times"></Link>
+          <Link to="/" className="cancel-button fas fa-times" />
           <div className="movie-info-header">
-            <img src={_image} alt={title} width="100px" height="150px"/>
+            <img src={_image} alt={title} width="100px" height="150px" />
             <div className="flex-col movie-info-title">
               <h3>{ utilities.toTitleCase(title) }</h3>
               <i>{ rating }</i>
@@ -69,7 +77,7 @@ export default class MovieInfo extends Component {
 
           <div className="actor-list">
             <h4>Cast</h4>
-            { actors }
+            { _actors }
           </div>
         </aside>
       );
@@ -78,3 +86,7 @@ export default class MovieInfo extends Component {
     return null;
   }
 }
+
+MovieInfo.propTypes = {
+  movie: PropTypes.object.isRequired,
+};

@@ -24,20 +24,20 @@ export default class App extends Component {
   }
 
   /**
-   * Get all movie and all categories. 
+   * Get all movie and all categories.
    */
   componentDidMount() {
     Promise.all([
       fetch('http://localhost:3000/api/v1/categories').then(res => res.json()),
       fetch('http://localhost:3000/api/v1/movies').then(res => res.json()),
     ])
-    .then((data) => {
-      const { categories } = data[0].data;
-      const { movies } = data[1].data;
-      
-      this.categories = categories;
-      this.setState({ movies });
-    });
+      .then((data) => {
+        const { categories } = data[0].data;
+        const { movies } = data[1].data;
+
+        this.categories = categories;
+        this.setState({ movies });
+      });
   }
 
   /**
@@ -47,13 +47,14 @@ export default class App extends Component {
    * @return {Object}
    */
   getMovieById(id) {
-    const { length } = this.state.movies;
+    const { movies } = this.state;
+    const { length } = movies;
 
     for (let i = 0; i < length; i++) {
-      const { film_id } = this.state.movies[i];
+      const { film_id: filmId } = movies[i];
 
-      if (film_id === id) {
-        return this.state.movies[i];
+      if (filmId === id) {
+        return movies[i];
       }
     }
 
@@ -62,27 +63,28 @@ export default class App extends Component {
 
   /**
    * Renders the BrowserRouter and the main layout of the application.
-   * 
+   *
    * @return {ReactElement}
    */
   render() {
-    return(
+    const { movies } = this.state;
+    return (
       <Router>
         <div className="app-wrapper">
-          <Header title="FakeFlix"/>
+          <Header title="FakeFlix" />
           <main className="main-content">
-            <MovieList movies={ this.state.movies } categories={ this.categories } />
+            <MovieList movies={movies} categories={this.categories} />
             <Route
-              path={`/movie/:id`}
+              path="/movie/:id"
               render={(data) => {
                 const { id } = data.match.params;
                 return (
-                  this.state.movies.length && <MovieInfo movie={this.getMovieById(id)} />
+                  movies.length && <MovieInfo movie={this.getMovieById(id)} />
                 );
               }}
             />
           </main>
-          <footer className="app-footer"></footer>
+          <footer className="app-footer" />
         </div>
       </Router>
     );

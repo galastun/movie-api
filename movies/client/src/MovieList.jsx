@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import MovieTile from './MovieTile';
 import CategorySlider from './CategorySlider';
@@ -6,7 +7,7 @@ import utilities from './utilities';
 
 /**
  * Displays CategorySliders for all movies based on their category.
- * 
+ *
  * @param {Object} props
  * @returns {ReactElement}
  */
@@ -19,30 +20,37 @@ export default function MovieList(props) {
     categoryMap[category.name] = [];
   });
 
-  movies.forEach((movie, i) => {
-    const { film_id: id, title, rating, category } = movie;
-    let { _index, _image } = movie;
+  movies.forEach((movie) => {
+    const {
+      film_id: id,
+      title,
+      rating,
+      category,
+    } = movie;
+    let { _image: image } = movie;
 
     // Add a fake image if it doesn't already have one
-    if (!_image) {
+    if (!image) {
       const imageNumber = Math.floor(Math.random() * 10);
-      _image = movie._image = `/images/${imageNumber}.jpg`;
+      image = `/images/${imageNumber}.jpg`;
+      movie._image = image;
     }
 
     // Put the movie in the specific category
     categoryMap[category].push(<MovieTile
-      title={ utilities.toTitleCase(title) }
-      rating={ rating }
-      image={ _image }
-      id={ id }
-      key={ id } />);
+      title={utilities.toTitleCase(title)}
+      rating={rating}
+      image={image}
+      id={id}
+      key={id}
+    />);
   });
 
   Object.entries(categoryMap).forEach((obj, i) => {
     _categories.push(
-      <CategorySlider key={ i } id={ i } title={ obj[0] }>
+      <CategorySlider key={i} id={i} title={obj[0]}>
         { obj[1] }
-      </CategorySlider>
+      </CategorySlider>,
     );
   });
 
@@ -52,3 +60,8 @@ export default function MovieList(props) {
     </section>
   );
 }
+
+MovieList.propTypes = {
+  movies: PropTypes.object.isRequired,
+  categories: PropTypes.string.isRequired,
+};
