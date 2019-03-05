@@ -4,6 +4,12 @@ nginx:
     - 3000:80
   links:
     - php
+    - client
+  volumes_from:
+    - app
+
+client:
+  build: ./movies/
   volumes_from:
     - app
 
