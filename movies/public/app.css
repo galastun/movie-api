@@ -61,6 +61,7 @@ body,
   padding: 1.0rem;
   overflow-y: scroll;
   background-color: #fff;
+  border-left: 1px solid #888;
 }
 
 .movie-info-header {

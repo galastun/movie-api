@@ -26,7 +26,7 @@ export default class MovieInfo extends Component {
    */
   componentWillMount() {
     const { movie } = this.props;
-    fetch(`http://localhost:3000/api/v1/movies/${movie.film_id}/actors`)
+    fetch(`/api/v1/movies/${movie.film_id}/actors`)
       .then(res => res.json())
       .then((json) => {
         this.setState({ actors: json.data.actors });

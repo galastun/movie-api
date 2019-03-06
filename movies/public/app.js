@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "f8632761390a2a48b9eb";
+/******/ 	var hotCurrentHash = "10431fedb833bf26f232";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -29998,9 +29998,9 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      Promise.all([fetch('http://localhost:3000/api/v1/categories').then(function (res) {
+      Promise.all([fetch('/api/v1/categories').then(function (res) {
         return res.json();
-      }), fetch('http://localhost:3000/api/v1/movies').then(function (res) {
+      }), fetch('/api/v1/movies').then(function (res) {
         return res.json();
       })]).then(function (data) {
         var categories = data[0].data.categories;
@@ -30178,10 +30178,13 @@ function CategorySlider(props) {
     className: "flex-container category-slider"
   }, children));
 }
+CategorySlider.defaultProps = {
+  children: []
+};
 CategorySlider.propTypes = {
   id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired,
   title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.element), prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.element]).isRequired
+  children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.element), prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.element])
 };
 
 /***/ }),
@@ -30357,7 +30360,7 @@ function (_Component) {
       var _this2 = this;
 
       var movie = this.props.movie;
-      fetch("http://localhost:3000/api/v1/movies/".concat(movie.film_id, "/actors")).then(function (res) {
+      fetch("/api/v1/movies/".concat(movie.film_id, "/actors")).then(function (res) {
         return res.json();
       }).then(function (json) {
         _this2.setState({
@@ -30507,7 +30510,7 @@ MovieList.propTypes = {
   movies: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object).isRequired,
   categories: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object).isRequired,
   filter: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string).isRequired,
-  children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.element), prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.element])
+  children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object), prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object])
 };
 
 /***/ }),

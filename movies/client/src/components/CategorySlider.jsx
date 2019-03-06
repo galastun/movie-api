@@ -18,11 +18,15 @@ export default function CategorySlider(props) {
   );
 }
 
+CategorySlider.defaultProps = {
+  children: [],
+};
+
 CategorySlider.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.oneOf([
+  children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element,
-  ]).isRequired,
+  ]),
 };

@@ -78,7 +78,7 @@ MovieList.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   filter: PropTypes.arrayOf(PropTypes.string).isRequired,
   children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.object,
   ]),
 };

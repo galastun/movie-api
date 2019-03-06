@@ -40,8 +40,8 @@ export default class App extends Component {
    */
   componentDidMount() {
     Promise.all([
-      fetch('http://localhost:3000/api/v1/categories').then(res => res.json()),
-      fetch('http://localhost:3000/api/v1/movies').then(res => res.json()),
+      fetch('/api/v1/categories').then(res => res.json()),
+      fetch('/api/v1/movies').then(res => res.json()),
     ])
       .then((data) => {
         const { categories } = data[0].data;
