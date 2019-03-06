@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import './app.css';
+import './styles/app.css';
 
 import Header from './components/Header';
 import MovieList from './components/MovieList';
@@ -49,6 +49,10 @@ export default class App extends Component {
 
         this.categories = categories;
         this.setState({ movies });
+      })
+      .catch(() => {
+        // Use this as an opportunity to display an error message
+        // Unimplemented for this project
       });
   }
 
