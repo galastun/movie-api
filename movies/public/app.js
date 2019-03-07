@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "10431fedb833bf26f232";
+/******/ 	var hotCurrentHash = "b5cc849fc0e850f70041";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -29930,8 +29930,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _app_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.css */ "./src/app.css");
-/* harmony import */ var _app_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_app_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _styles_app_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/app.css */ "./src/styles/app.css");
+/* harmony import */ var _styles_app_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_app_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Header */ "./src/components/Header.jsx");
 /* harmony import */ var _components_MovieList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/MovieList */ "./src/components/MovieList.jsx");
 /* harmony import */ var _components_MovieInfo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/MovieInfo */ "./src/components/MovieInfo.jsx");
@@ -29998,9 +29998,9 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      Promise.all([fetch('/api/v1/categories').then(function (res) {
+      Promise.all([fetch('http://localhost:3000/api/v1/categories').then(function (res) {
         return res.json();
-      }), fetch('/api/v1/movies').then(function (res) {
+      }), fetch('http://localhost:3000/api/v1/movies').then(function (res) {
         return res.json();
       })]).then(function (data) {
         var categories = data[0].data.categories;
@@ -30010,6 +30010,8 @@ function (_Component) {
         _this2.setState({
           movies: movies
         });
+      }).catch(function () {// Use this as an opportunity to display an error message
+        // Unimplemented for this project
       });
     }
     /**
@@ -30089,17 +30091,6 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
-
-/***/ }),
-
-/***/ "./src/app.css":
-/*!*********************!*\
-  !*** ./src/app.css ***!
-  \*********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -30312,9 +30303,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -30347,24 +30338,53 @@ function (_Component) {
     _this.state = {
       actors: []
     };
+    _this.getActorList = _this.getActorList.bind(_assertThisInitialized(_this));
     return _this;
   }
   /**
-   * Gets the list of actors for the given movie.
+   * Get actors on first instantiation of component.
    */
 
 
   _createClass(MovieInfo, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getActorList();
+    }
+    /**
+     * Get new actors when props update
+     */
+
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var oldMovie = prevProps.movie;
+      var movie = this.props.movie;
+
+      if (oldMovie.film_id !== movie.film_id) {
+        this.getActorList();
+      }
+    }
+    /**
+     * Fetch the actor list based on the movie id.
+     */
+
+  }, {
+    key: "getActorList",
+    value: function getActorList() {
       var _this2 = this;
 
+      this.setState({
+        actors: []
+      });
       var movie = this.props.movie;
-      fetch("/api/v1/movies/".concat(movie.film_id, "/actors")).then(function (res) {
+      fetch("http://localhost:3000/api/v1/movies/".concat(movie.film_id, "/actors")).then(function (res) {
         return res.json();
       }).then(function (json) {
+        var actors = json.data.actors;
+
         _this2.setState({
-          actors: json.data.actors
+          actors: actors
         });
       });
     }
@@ -30562,6 +30582,17 @@ MovieTile.propTypes = {
   rating: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   image: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
+
+/***/ }),
+
+/***/ "./src/styles/app.css":
+/*!****************************!*\
+  !*** ./src/styles/app.css ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
