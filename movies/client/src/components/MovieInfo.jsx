@@ -16,7 +16,6 @@ export default class MovieInfo extends Component {
   constructor(props) {
     super(props);
 
-    this.actorList = [];
     this.state = {
       actors: [],
     };
