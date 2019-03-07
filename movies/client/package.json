@@ -16,7 +16,8 @@
     ]
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "start": "node index.js",
+    "start-dev": "webpack-dev-server --config ./webpack.config.js --mode development",
     "test": "jest"
   },
   "repository": {

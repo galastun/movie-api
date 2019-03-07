@@ -19,17 +19,39 @@ export default class MovieInfo extends Component {
     this.state = {
       actors: [],
     };
+    this.getActorList = this.getActorList.bind(this);
   }
 
   /**
-   * Gets the list of actors for the given movie.
+   * Get actors on first instantiation of component.
    */
-  componentWillMount() {
+  componentDidMount() {
+    this.getActorList();
+  }
+
+  /**
+   * Get new actors when props update
+   */
+  componentDidUpdate(prevProps) {
+    const { movie: oldMovie } = prevProps;
+    const { movie } = this.props;
+
+    if (oldMovie.film_id !== movie.film_id) {
+      this.getActorList();
+    }
+  }
+
+  /**
+   * Fetch the actor list based on the movie id.
+   */
+  getActorList() {
+    this.setState({ actors: [] });
     const { movie } = this.props;
     fetch(`/api/v1/movies/${movie.film_id}/actors`)
       .then(res => res.json())
       .then((json) => {
-        this.setState({ actors: json.data.actors });
+        const { actors } = json.data;
+        this.setState({ actors });
       });
   }
 
@@ -49,6 +71,7 @@ export default class MovieInfo extends Component {
         description,
         _image,
       } = movie;
+
       const _actors = [];
 
       actors.forEach((actor, i) => {
