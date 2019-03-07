@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "b5cc849fc0e850f70041";
+/******/ 	var hotCurrentHash = "4ea5a6fae76f32c9a99b";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -29998,9 +29998,9 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      Promise.all([fetch('http://localhost:3000/api/v1/categories').then(function (res) {
+      Promise.all([fetch('/api/v1/categories').then(function (res) {
         return res.json();
-      }), fetch('http://localhost:3000/api/v1/movies').then(function (res) {
+      }), fetch('/api/v1/movies').then(function (res) {
         return res.json();
       })]).then(function (data) {
         var categories = data[0].data.categories;
@@ -30378,7 +30378,7 @@ function (_Component) {
         actors: []
       });
       var movie = this.props.movie;
-      fetch("http://localhost:3000/api/v1/movies/".concat(movie.film_id, "/actors")).then(function (res) {
+      fetch("/api/v1/movies/".concat(movie.film_id, "/actors")).then(function (res) {
         return res.json();
       }).then(function (json) {
         var actors = json.data.actors;
