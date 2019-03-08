@@ -41,10 +41,10 @@ $app->add(function ($req, $res, $next) {
     ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
 });
 
-$app->get('/', function($request, $response, $args) {
+$app->get('/[{path: movie\/.*}]', function($request, $response, $args) {
   $file = 'index.html';
   if(file_exists($file)) {
-    return $reponse->write(file_get_contents($file));
+    return $response->write(file_get_contents($file));
   } else {
     throw new \Slim\Exception\NotFoundException($request, $response);
   }
